@@ -16,4 +16,4 @@ notes app
 DB_USER = "{user}"
 DB_PASS = "{pass}"
 ```
-where `{user}` is the mysql username with privileges to the notes database and `{pass}` is that mysql user's password.
+    where `{user}` is the mysql username with privileges to the notes database and `{pass}` is that mysql user's password.
