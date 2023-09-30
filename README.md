@@ -11,7 +11,7 @@ notes app
 
 ## setting up the environment
 - Create a file named ".env" in the root directory of this application.
-- Type into the following into the .env file where `{user}` is the mysql username with privileges to the notes database and `{pass}` is that mysql user's: password.
+- Type into the following into the .env file where `{user}` is the mysql username with privileges to the notes database and `{pass}` is that mysql user's password:
 ```
 DB_USER = "{user}"
 DB_PASS = "{pass}"
