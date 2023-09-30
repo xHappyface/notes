@@ -23,19 +23,19 @@ type NotesLogger struct {
 
 func NewLogger() *NotesLogger {
 	return &NotesLogger{
-		output: log.New(os.Stderr, "NOTES:", log.LstdFlags|log.Lmsgprefix),
+		output: log.New(os.Stderr, "NOTES:", log.LstdFlags),
 	}
 }
 
 func (logger *NotesLogger) Log(lv uint8, msg string) {
 	switch lv {
 	case LOG_LV_INFO:
-		logger.output.Printf("%s:%s", PREFIX_LV_INFO, msg)
+		logger.output.Printf("%s: %s", PREFIX_LV_INFO, msg)
 	case LOG_LV_WRN:
-		logger.output.Printf("%s:%s", PREFIX_LV_WRN, msg)
+		logger.output.Printf("%s: %s", PREFIX_LV_WRN, msg)
 	case LOG_LV_ERR:
-		logger.output.Printf("%s:%s", PREFIX_LV_ERR, msg)
+		logger.output.Printf("%s: %s", PREFIX_LV_ERR, msg)
 	case LOG_LV_FTL_ERR:
-		logger.output.Fatalf("%s:%s", PREFIX_LV_FTL_ERR, msg)
+		logger.output.Fatalf("%s: %s", PREFIX_LV_FTL_ERR, msg)
 	}
 }

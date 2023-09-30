@@ -1,12 +1,11 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
-	"os"
+	"context"
+	"time"
 
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
+	"github.com/xHappyface/notes/db"
 	"github.com/xHappyface/notes/log"
 )
 
@@ -16,13 +15,14 @@ func main() {
 	if err := godotenv.Load(); err != nil {
 		logger.Log(log.LOG_LV_FTL_ERR, err.Error())
 	}
-	logger.Log(log.LOG_LV_INFO, "Connecting to database")
-	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(localhost:3306)/notes", os.Getenv("DB_USER"), os.Getenv("DB_PASS")))
+	ctx, ctxCancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer ctxCancel()
+	db, err := db.LoadDB(logger, ctx)
 	if err != nil {
 		logger.Log(log.LOG_LV_FTL_ERR, err.Error())
 	}
-	logger.Log(log.LOG_LV_INFO, "Pinging database")
-	if err = db.Ping(); err != nil {
-		logger.Log(log.LOG_LV_FTL_ERR, err.Error()+". Possible cause of error is database not existing. Please read \"README.md\" for instructions on setting up the database.")
+	defer db.Close()
+	if err = db.InitDB(logger); err != nil {
+		logger.Log(log.LOG_LV_FTL_ERR, err.Error())
 	}
 }
