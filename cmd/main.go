@@ -11,10 +11,11 @@ import (
 
 func main() {
 	logger := log.NewLogger()
-	logger.Log(log.LOG_LV_INFO, "Loading environment")
+	logger.Log(log.LOG_LV_INFO, "Loading environment...")
 	if err := godotenv.Load(); err != nil {
 		logger.Log(log.LOG_LV_FTL_ERR, err.Error())
 	}
+	logger.Log(log.LOG_LV_INFO, "Environment loaded")
 	ctx, ctxCancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer ctxCancel()
 	db, err := db.LoadDB(logger, ctx)

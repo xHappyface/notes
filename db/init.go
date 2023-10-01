@@ -25,7 +25,7 @@ func (db *NotesDB) Close() {
 }
 
 func LoadDB(logger *log.NotesLogger, ctx context.Context) (*NotesDB, error) {
-	logger.Log(log.LOG_LV_INFO, "Loading database")
+	logger.Log(log.LOG_LV_INFO, "Loading database...")
 	logger.Log(log.LOG_LV_INFO, "Connecting to database")
 	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(localhost:3306)/notes", os.Getenv("DB_USER"), os.Getenv("DB_PASS")))
 	if err != nil {
@@ -37,7 +37,7 @@ func LoadDB(logger *log.NotesLogger, ctx context.Context) (*NotesDB, error) {
 		return nil, errors.Join(err, errDBNotExists)
 	}
 	logger.Log(log.LOG_LV_INFO, "Database pinged")
-	logger.Log(log.LOG_LV_INFO, "Environment loaded successfully")
+	logger.Log(log.LOG_LV_INFO, "Environment loaded successfully!")
 	return &NotesDB{
 		source: db,
 		ctx:    ctx,
@@ -45,7 +45,7 @@ func LoadDB(logger *log.NotesLogger, ctx context.Context) (*NotesDB, error) {
 }
 
 func (db *NotesDB) InitDB(logger *log.NotesLogger) error {
-	logger.Log(log.LOG_LV_INFO, "Initializing database")
+	logger.Log(log.LOG_LV_INFO, "Initializing database...")
 	logger.Log(log.LOG_LV_INFO, "Preparing statement")
 	stmt, err := db.source.PrepareContext(db.ctx, `CREATE TABLE IF NOT EXISTS notes(id VARCHAR(36) PRIMARY KEY NOT NULL, title VARCHAR(180) NOT NULL DEFAULT "", body TEXT);`)
 	if err != nil {
@@ -59,6 +59,6 @@ func (db *NotesDB) InitDB(logger *log.NotesLogger) error {
 		return err
 	}
 	logger.Log(log.LOG_LV_INFO, "Statement executed")
-	logger.Log(log.LOG_LV_INFO, "Database initialized successfully")
+	logger.Log(log.LOG_LV_INFO, "Database initialized successfully!")
 	return nil
 }
